@@ -6,7 +6,7 @@ ENV CODER_VERSION="${CODER_VERSION}"
 ENV PATH=/home/coder/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 
 # Install dependencies.
-RUN apt-get update && apt-get install -y apt-utils net-tools git locales dumb-init curl wget unzip && \
+RUN apt-get update && apt-get install -y apt-utils net-tools git locales dumb-init curl wget unzip zsh && \
     apt -y autoremove
 
 # Set locale.
@@ -17,7 +17,7 @@ RUN locale-gen en_US.UTF-8
 
 # Create coder-user and install fixuid.
 RUN addgroup --gid 1000 coder && \
-    adduser --uid 1000 --ingroup coder --home /home/coder --shell /bin/bash --disabled-password --gecos "" coder && \
+    adduser --uid 1000 --ingroup coder --home /home/coder --shell /bin/zsh --disabled-password --gecos "" coder && \
     USER=coder && \
     GROUP=coder && \
     mkdir -p /home/coder/.local/bin && \
@@ -42,6 +42,16 @@ RUN cd /home/coder && \
 # Create the code-server directory to ensure coder is the owner of it.
 RUN mkdir -p /home/coder/project/code-server && \
     chown -R coder:coder /home/coder/project
+
+# Configure settings and extensions.
+RUN mkdir -p /home/coder/.local/share/code-server/Backups && \
+    mkdir -p /home/coder/.local/share/code-server/extensions && \
+    mkdir -p /home/coder/.local/share/code-server/User
+COPY ./.docker/coder/config/settings.json /home/coder/.local/share/code-server/User/settings.json
+
+# Configure oh-my-zsh
+RUN wget https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/install.sh -O - | zsh || true
+COPY ./.docker/coder/config/zshrc /home/coder/.zshrc
 
 WORKDIR /home/coder/project/code-server
 EXPOSE 8443

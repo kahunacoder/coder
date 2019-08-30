@@ -1,0 +1,11 @@
+{
+    "editor.minimap.enabled": true,
+    "breadcrumbs.enabled": true,
+    "workbench.activityBar.visible": false,
+    "explorer.openEditors.visible": 0,
+    "workbench.colorTheme": "Solarized Dark",
+    "editor.fontSize": 15,
+    "explorer.confirmDragAndDrop": false,
+    "files.autoSave": "afterDelay",
+    "workbench.startupEditor": "none",
+}
