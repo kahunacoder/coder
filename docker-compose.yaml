@@ -1,0 +1,34 @@
+version: '3'
+
+services:
+  coder:
+    #image: acondura/code-server:latest
+    build:
+      context: ./
+      args:
+        CODER_VERSION: "1.1156-vsc1.33.1"
+      dockerfile: ./.docker/coder/Dockerfile
+    container_name: coder_coder
+    volumes:
+      - "sharedvolume:/home/coder/project/code-server"
+    ports:
+      - "8443:8443"
+    env_file:
+      - "./.docker/.env"
+  apache:
+    container_name: coder_apache
+    build:
+      context: ./
+      dockerfile: ./.docker/apache/Dockerfile
+    volumes:
+      - "sharedvolume:/home/coder/project/code-server"
+    environment:
+      - APACHE_RUN_USER=#1000
+      - APACHE_RUN_GROUP=#1000
+    ports:
+      - "8080:80"
+    env_file:
+      - "./.docker/.env"
+
+volumes:
+  sharedvolume:
