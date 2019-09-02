@@ -59,8 +59,7 @@ COPY ./.docker/coder/config/settings.json /home/coder/.local/share/code-server/U
 # Configure oh-my-zsh
 RUN wget https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/install.sh -O - | zsh || true
 COPY ./.docker/coder/config/zshrc /home/coder/.zshrc
-RUN touch /home/coder/.zshrc_aliases  && \
-    chown coder:coder /home/coder/.zshrc*
+RUN touch /home/coder/.zshrc_aliases
 
 WORKDIR /home/coder/project/code-server
 EXPOSE 8443
