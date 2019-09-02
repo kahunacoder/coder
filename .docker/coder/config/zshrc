@@ -98,3 +98,6 @@ source $ZSH/oh-my-zsh.sh
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
+
+# Load aliases for docker exec commands.
+source ~/.zshrc_aliases
