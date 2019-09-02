@@ -6,7 +6,7 @@ ENV CODER_VERSION="${CODER_VERSION}"
 ENV PATH=/home/coder/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 
 # Install dependencies.
-RUN apt-get update && apt-get install -y apt-utils net-tools git locales dumb-init curl wget unzip zsh && \
+RUN apt-get update && apt-get install -y apt-utils net-tools git locales dumb-init curl wget unzip zsh apt-transport-https ca-certificates gnupg2 software-properties-common && \
     apt -y autoremove
 
 # Set locale.
@@ -28,6 +28,13 @@ RUN addgroup --gid 1000 coder && \
     mkdir -p /etc/fixuid && \
     chown -R coder:coder /etc/fixuid
 COPY ./.docker/coder/config/config.yml /etc/fixuid/config.yml
+
+# Install docker.
+RUN curl -fsSL https://download.docker.com/linux/debian/gpg | apt-key add -
+RUN add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/debian $(lsb_release -cs) stable" && \
+    apt-get update && \
+    apt-get install docker-ce docker-ce-cli containerd.io -y && \
+    usermod -aG docker coder
 
 # Run as coder for the rest of the build.
 USER coder

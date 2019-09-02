@@ -10,6 +10,7 @@ services:
     container_name: coder_coder
     volumes:
       - "codersharedvolume:/home/coder/project/code-server"
+      - "/var/run/docker.sock:/var/run/docker.sock"
     ports:
       - "8443:8443"
     env_file:
