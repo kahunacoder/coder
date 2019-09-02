@@ -9,7 +9,7 @@ services:
       dockerfile: ./.docker/coder/Dockerfile
     container_name: coder_coder
     volumes:
-      - "sharedvolume:/home/coder/project/code-server"
+      - "codersharedvolume:/home/coder/project/code-server"
     ports:
       - "8443:8443"
     env_file:
@@ -20,7 +20,7 @@ services:
       context: ./
       dockerfile: ./.docker/apache/Dockerfile
     volumes:
-      - "sharedvolume:/home/coder/project/code-server"
+      - "codersharedvolume:/home/coder/project/code-server"
     environment:
       - APACHE_RUN_USER=#1000
       - APACHE_RUN_GROUP=#1000
@@ -30,4 +30,4 @@ services:
       - "./.docker/.env"
 
 volumes:
-  sharedvolume:
+  codersharedvolume:
