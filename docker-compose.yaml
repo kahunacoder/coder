@@ -2,7 +2,6 @@ version: '3'
 
 services:
   coder:
-    #image: acondura/code-server:latest
     build:
       context: ./
       args:
