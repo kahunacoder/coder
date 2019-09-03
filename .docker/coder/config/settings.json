@@ -8,4 +8,10 @@
     "explorer.confirmDragAndDrop": false,
     "files.autoSave": "afterDelay",
     "workbench.startupEditor": "none",
+    "files.watcherExclude": {
+        "**/.git/objects/**": true,
+        "**/.git/subtree-cache/**": true,
+        "**/node_modules/*/**": true,
+        "**/vendor/*/**": true,
+      }
 }
