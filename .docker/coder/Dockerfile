@@ -15,6 +15,10 @@ COPY ./.docker/coder/config/locale.gen /etc/locale.gen
 COPY ./.docker/coder/config/locale.conf /etc/locale.conf
 RUN locale-gen en_US.UTF-8
 
+# Copy sysctl conf file and load it.
+COPY ./.docker/coder/config/sysctl.conf /etc/sysctl.conf
+RUN sysctl -p
+
 # Create coder-user and install fixuid.
 RUN addgroup --gid 1000 coder && \
     adduser --uid 1000 --ingroup coder --home /home/coder --shell /bin/zsh --disabled-password --gecos "" coder && \
@@ -55,7 +59,6 @@ RUN mkdir -p /home/coder/.local/share/code-server/Backups && \
     mkdir -p /home/coder/.local/share/code-server/extensions && \
     mkdir -p /home/coder/.local/share/code-server/User
 COPY ./.docker/coder/config/settings.json /home/coder/.local/share/code-server/User/settings.json
-COPY ./.docker/coder/config/sysctl.conf /etc/sysctl.conf
 
 # Configure oh-my-zsh
 RUN wget https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/install.sh -O - | zsh || true
