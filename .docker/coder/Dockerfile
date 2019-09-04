@@ -55,6 +55,7 @@ RUN mkdir -p /home/coder/.local/share/code-server/Backups && \
     mkdir -p /home/coder/.local/share/code-server/extensions && \
     mkdir -p /home/coder/.local/share/code-server/User
 COPY ./.docker/coder/config/settings.json /home/coder/.local/share/code-server/User/settings.json
+COPY ./.docker/coder/config/sysctl.conf /etc/sysctl.conf
 
 # Configure oh-my-zsh
 RUN wget https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/install.sh -O - | zsh || true
