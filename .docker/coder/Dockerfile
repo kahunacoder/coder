@@ -15,9 +15,6 @@ COPY ./.docker/coder/config/locale.gen /etc/locale.gen
 COPY ./.docker/coder/config/locale.conf /etc/locale.conf
 RUN locale-gen en_US.UTF-8
 
-# Copy sysctl conf file and load it.
-RUN echo "fs.inotify.max_user_watches=524288" >> /etc/sysctl.conf
-
 # Create coder-user and install fixuid.
 RUN addgroup --gid 1000 coder && \
     adduser --uid 1000 --ingroup coder --home /home/coder --shell /bin/zsh --disabled-password --gecos "" coder && \
